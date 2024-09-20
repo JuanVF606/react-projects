@@ -10,6 +10,6 @@ Welcome to my React Projects repository! This repository contains all the React 
    - 🥉 **Technologies Used**: React (using only hooks like useState).
   
 ### 1. wheater-app
-   - 🥇 **Description**: Advanced weather app usin API and maps.
+   - 🥇 **Description**: Advanced weather app using API and maps.
    - 🥈 **Features**: localize your city and view on the map.
    - 🥉 **Technologies Used**: React, tailwindcss, axios.
