@@ -9,7 +9,7 @@ Welcome to my React Projects repository! This repository contains all the React 
    - 🥈 **Features**: Increase, decrease and reset the counter.
    - 🥉 **Technologies Used**: React (using only hooks like useState).
   
-### 1. wheater-app
+### 2. wheater-app
    - 🥇 **Description**: Advanced weather app using API and maps.
    - 🥈 **Features**: localize your city and view on the map.
    - 🥉 **Technologies Used**: React, tailwindcss, axios.
