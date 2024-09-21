@@ -5,6 +5,8 @@ import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
+import Tours from "./pages/Tours";
+import Reservation from "./pages/Reservations";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/tours" element={<Tours/>} />
+          <Route path="/reservations" element={<Reservation />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

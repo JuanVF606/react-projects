@@ -33,9 +33,9 @@ const SummaryCard = ({ title, value, icon }) => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-6 rounded-lg shadow-lg flex items-center transition-transform transform hover:scale-105 duration-300 border-l-4 border-blue-300">
-      <div className="text-4xl text-white mr-4">{icon}</div>
-      <div className="text-white">
+    <div className="bg-sand-dollar p-6 rounded-lg shadow-lg flex items-center transition-transform transform hover:scale-105 duration-300 border-l-4 border-forest-green">
+      <div className="text-4xl text-forest-green mr-4">{icon}</div>
+      <div className="text-forest-green">
         <h3 className="text-xl font-semibold mb-1">{title}</h3>
         <div className="flex items-center">
           <p className="text-3xl font-extrabold">
