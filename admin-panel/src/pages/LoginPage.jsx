@@ -40,7 +40,7 @@ function LoginPage() {
           />
         </div>
         <div className="w-full md:w-1/2 p-8">
-          <h1 className="text-3xl font-bold text-forest-green mb-6">Login to Admin Panel</h1>
+          <h1 className="text-3xl font-bold text-forest-green mb-6">Nature Tours Admin Panel </h1>
 
           {error && <p className="text-red-500 mb-4">{error}</p>}
 
@@ -68,9 +68,7 @@ function LoginPage() {
             {loading ? 'Logging in...' : 'Login'}
           </button>
 
-          <p className="mt-4 text-center text-sm text-gray-600">
-            Don't have an account? <a href="/#" className="text-forest-green hover:underline">Sign Up</a>
-          </p>
+          
         </div>
       </div>
     </div>

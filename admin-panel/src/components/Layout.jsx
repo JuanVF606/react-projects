@@ -1,9 +1,9 @@
 // src/components/Layout.js
 import React from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { FaTachometerAlt, FaUsers, FaSignOutAlt, FaClipboardList, FaComments } from "react-icons/fa";
+import { FaTachometerAlt, FaSignOutAlt, FaClipboardList, FaComments } from "react-icons/fa";
 import { toast } from "react-toastify";
-
+import { MdOutlineNotificationAdd, MdOutlineCreate } from "react-icons/md";
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Layout = () => {
     <div className="flex flex-col md:flex-row h-screen bg-sand-dollar">
       <aside className="bg-forest-green text-white w-full md:w-64 p-6 shadow-lg flex flex-col">
         <h2 className="text-3xl font-bold mb-8 text-center font-oswald bg-sand-dollar p-4 rounded-md shadow-md text-forest-green">
-          Admin Panel <span className="text-sm block">v1.0</span>
+        Nature Tours Admin Panel <span className="text-sm block">v1.0</span>
         </h2>
 
         <nav className="flex-grow">
@@ -48,15 +48,15 @@ const Layout = () => {
             </li>
             <li>
               <Link
-                to="/users"
+                to="/reminder"
                 className={`flex items-center p-2 rounded-md transition duration-200 ${
-                  location.pathname === "/users"
+                  location.pathname === "/reminder"
                     ? "bg-misty-blue text-forest-green"
                     : "text-white hover:bg-misty-blue"
                 }`}
               >
-                <FaUsers className="mr-3 text-lg" />
-                Users
+                <MdOutlineNotificationAdd className="mr-3 text-lg" />
+                reminders
               </Link>
             </li>
             <li>
@@ -68,8 +68,8 @@ const Layout = () => {
                     : "text-white hover:bg-misty-blue"
                 }`}
               >
-                <FaClipboardList className="mr-3 text-lg" />
-                Tours
+                <MdOutlineCreate className="mr-3 text-lg" />
+                Create Tour 
               </Link>
             </li>
             <li>

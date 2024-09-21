@@ -15,13 +15,23 @@ const LineChart = memo(({ labels, data }) => {
           {
             label: 'Sales',
             data,
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgba(255, 99, 132, 1)',
             fill: true,
+            tension: 0.3, // Suaviza las líneas
           },
         ],
       },
       options: {
+        animations: {
+          tension: {
+            duration: 1000, // Duración de la animación
+            easing: 'easeInOutQuad', // Suaviza el inicio y el final
+            from: 1, // Desde líneas rectas
+            to: 0.3, // A líneas más suaves
+            loop: false,
+          },
+        },
         scales: {
           y: {
             beginAtZero: true,

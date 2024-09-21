@@ -1,8 +1,11 @@
 // src/components/charts/BarChart.js
 import React, { useEffect, useRef, memo } from 'react';
-import { Chart } from 'chart.js/auto';
+import { Chart, registerables } from 'chart.js';
+import 'chartjs-plugin-datalabels';
 
-const BarChart = memo(({ labels, data }) => {
+Chart.register(...registerables);
+
+const BarChart = memo(({ labels, data, title }) => {
   const chartRef = useRef(null);
   
   useEffect(() => {
@@ -13,18 +16,45 @@ const BarChart = memo(({ labels, data }) => {
         labels,
         datasets: [
           {
-            label: 'New Users',
+            label: 'Visitors',
             data,
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
             borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1,
+            borderWidth: 2,
+            barThickness: 30, // Ancho de las barras
+            hoverBackgroundColor: 'rgba(54, 162, 235, 0.8)',
+            hoverBorderColor: 'rgba(54, 162, 235, 1)',
           },
         ],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: title,
+            font: {
+              size: 18,
+            },
+          },
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+            formatter: (value) => value,
+            color: '#fff',
+          },
+        },
         scales: {
           y: {
             beginAtZero: true,
+            ticks: {
+              stepSize: 5, // Ajusta el tamaño de los pasos
+            },
           },
         },
       },
@@ -33,7 +63,7 @@ const BarChart = memo(({ labels, data }) => {
     return () => {
       chart.destroy(); // Limpiar el gráfico al desmontar
     };
-  }, [labels, data]);
+  }, [labels, data, title]);
 
   return <canvas ref={chartRef} className="w-full h-72"></canvas>;
 });
