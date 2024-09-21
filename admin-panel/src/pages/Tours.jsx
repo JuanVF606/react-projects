@@ -4,17 +4,6 @@ import axios from "axios";
 import { useTable, usePagination } from "react-table";
 import { TourContext } from "../context/TourContext";
 import Modal from "../components/Modal";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-
-// Asegúrate de que el ícono del marcador de Leaflet se muestre correctamente
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
-});
 
 const Tours = () => {
   const { addTour, tours } = useContext(TourContext);
@@ -28,7 +17,6 @@ const Tours = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTour, setSelectedTour] = useState(null);
   const today = new Date().toISOString().split("T")[0];
 
   const handleInputChange = (e) => {
@@ -38,7 +26,7 @@ const Tours = () => {
       [name]: value,
     }));
   };
-  const pageCount = Math.ceil(tours.length / 10);
+
   const handleAddTour = async (e) => {
     e.preventDefault();
     const { name, description, date, location, price } = tourData;
@@ -80,18 +68,6 @@ const Tours = () => {
       { Header: 'Date', accessor: 'date' },
       { Header: 'Location', accessor: 'location' },
       { Header: 'Price', accessor: 'price', Cell: ({ value }) => `$${value.toFixed(2)}` },
-      {
-        Header: 'Map',
-        accessor: 'coordinates',
-        Cell: ({ value }) => (
-          <button
-            className="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600"
-            onClick={() => setSelectedTour(value)}
-          >
-            View Map
-          </button>
-        ),
-      },
     ],
     []
   );
@@ -213,35 +189,26 @@ const Tours = () => {
               </tbody>
             </table>
 
-            <div className="mt-4 flex justify-between">
-              <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                {'<<'}
-              </button>
-              <button onClick={previousPage} disabled={!canPreviousPage}>
-                {'<'}
-              </button>
-              <button onClick={nextPage} disabled={!canNextPage}>
-                {'>'}
-              </button>
-              <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                {'>>'}
-              </button>
+            <div className="mt-4 flex justify-between items-center">
+              <span>
+                Page <strong>{pageIndex + 1} of {pageOptions.length}</strong>
+              </span>
+              <div className="flex space-x-2">
+                <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="bg-gray-300 py-2 px-4 rounded-md" >
+                  {'<<'}
+                </button>
+                <button onClick={() => previousPage()} disabled={!canPreviousPage} className="bg-gray-300 py-2 px-4 rounded-md" >
+                  {'<'}
+                </button>
+                <button onClick={() => nextPage()} disabled={!canNextPage} className="bg-gray-300 py-2 px-4 rounded-md">
+                  {'>'}
+                </button>
+                <button onClick={() => gotoPage(pageOptions.length - 1)} disabled={!canNextPage} className="bg-gray-300 py-2 px-4 rounded-md">
+                  {'>>'}
+                </button>
+              </div>
             </div>
           </div>
-
-          {selectedTour && (
-            <MapContainer center={selectedTour} zoom={13} className="mt-4" style={{ height: "400px", width: "100%" }}>
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              />
-              <Marker position={selectedTour}>
-                <Popup>
-                  Tour Location: {selectedTour[0]}, {selectedTour[1]}
-                </Popup>
-              </Marker>
-            </MapContainer>
-          )}
         </Modal>
       )}
     </div>
