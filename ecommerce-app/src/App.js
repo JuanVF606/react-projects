@@ -1,13 +1,11 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/navigation/Navbar'; // Navbar importado
-import Footer from './components/navigation/Footer'; // Footer importado
-import Home from './pages/Home'; // Página de inicio importada
-import ProductDetails from './pages/ProductDetails'; // Página de detalles de producto importada
-// import Shop from './pages/Shop'; // Página de tienda importada
-// import About from './pages/About'; // Página de "About"
-// import Contact from './pages/Contact'; // Página de contacto
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/navigation/Navbar"; // Navbar importado
+import Footer from "./components/navigation/Footer"; // Footer importado
+import Home from "./pages/Home"; // Página de inicio importada
+import ProductDetails from "./pages/ProductDetails"; // Página de detalles de producto importada
+import Shop from "./pages/Shop"; // Página de tienda importada
+import Cart from "./pages/Cart"; // Página de carrito importada
 const App = () => {
   return (
     <Router>
@@ -16,13 +14,12 @@ const App = () => {
         <Navbar />
 
         {/* Contenido principal */}
-        <main className="flex-grow">
+        <main className="flex-grow my-16">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path='/products/:id' element={<ProductDetails />} />
-            {/* <Route path="/shop" element={<Shop />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} /> */}
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/cart" element={<Cart/>} />
           </Routes>
         </main>
 

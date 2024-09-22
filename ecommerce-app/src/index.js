@@ -4,10 +4,17 @@ import "./index.css";
 import App from "./App";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CurrencyProvider } from "./context/Currency";
+import { ShippingProvider } from "./context/ShippingContext";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ShippingProvider>
+      <CurrencyProvider>
+        <App />
+      </CurrencyProvider>
+    </ShippingProvider>
     <ToastContainer
       position="top-center"
       autoClose={3000}
@@ -19,7 +26,6 @@ root.render(
       draggable
       pauseOnHover
       theme="colored" // Usar tema de color para que se vea más atractivo
-      className="toast-container" // Clase para el contenedor de toast
     />
   </React.StrictMode>
 );

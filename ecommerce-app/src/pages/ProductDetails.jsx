@@ -1,12 +1,14 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import useStore from '../store/useStore';
-import { ToastContainer, toast } from 'react-toastify';
-import { FaStar, FaShoppingCart, FaCheckCircle } from 'react-icons/fa';
+import React from "react";
+import { useParams } from "react-router-dom";
+import useStore from "../store/useStore";
+import useCartStore from "../store/useCartStore";
+import { toast } from "react-toastify";
+import { FaStar, FaShoppingCart, FaCheckCircle } from "react-icons/fa";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { products, addToCart } = useStore();
+  const { products } = useStore();
+  const {addToCart} = useCartStore();
   const product = products.find((product) => product.id === parseInt(id));
 
   if (!product) {
@@ -19,32 +21,23 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="container mx-auto my-16 p-6 bg-gray-100 rounded-lg shadow-lg">
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+    <div className="container mx-auto  p-6 bg-gray-100 rounded-lg shadow-lg">
       <div className="flex flex-col md:flex-row items-start">
-        <img 
-          src={product.image} 
-          alt={product.name} 
+        <img
+          src={product.image}
+          alt={product.name}
           className="w-full md:w-1/4 rounded-lg shadow-lg mb-6 md:mb-0 transition-transform transform hover:scale-105"
         />
         <div className="md:ml-8 flex flex-col justify-between">
-          <h2 className="text-3xl font-bold mb-2 text-gray-800">{product.name}</h2>
+          <h2 className="text-3xl font-bold mb-2 text-gray-800">
+            {product.name}
+          </h2>
           <p className="text-gray-700 mb-4">{product.description}</p>
           <p className="text-2xl font-semibold text-blue-600 mb-4">
             ${product.price.toLocaleString("es-CL")}
           </p>
-          <button 
-            onClick={handleAddToCart} 
+          <button
+            onClick={handleAddToCart}
             className="bg-blue-600 text-white font-semibold px-6 py-3 rounded-full shadow-md transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center"
           >
             <FaShoppingCart className="mr-2" />
@@ -97,12 +90,32 @@ const ProductDetails = () => {
         <h3 className="text-2xl font-bold mb-4">Similar Products</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.slice(0, 4).map((similarProduct) => (
-            <div key={similarProduct.id} className="bg-white shadow-md rounded-lg p-4 transition-transform transform hover:scale-105">
-              <img src={similarProduct.image} alt={similarProduct.name} className="w-full h-32 object-cover rounded-lg mb-2" />
+            <div
+              key={similarProduct.id}
+              className="bg-white shadow-md rounded-lg p-4 transition-transform transform hover:scale-105"
+            >
+              <img
+                src={similarProduct.image}
+                alt={similarProduct.name}
+                className="w-full h-32 object-cover rounded-lg mb-2"
+              />
               <h4 className="text-lg font-semibold">{similarProduct.name}</h4>
-              <p className="text-gray-600 mb-1">${similarProduct.price.toLocaleString("es-CL")}</p>
-              <button 
-                onClick={() => addToCart(similarProduct)} 
+              <p className="text-gray-600 mb-1">
+                ${similarProduct.price.toLocaleString("es-CL")}
+              </p>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.href = `/products/${similarProduct.id}`;
+                }
+              }
+                className="bg-gray-200 text-gray-800 font-semibold px-3 py-1 rounded-full mr-2"
+              >
+                Details
+              </button>
+
+              <button
+                onClick={() => addToCart(similarProduct)}
                 className="bg-blue-600 text-white font-semibold px-3 py-1 rounded-full transition-transform transform hover:scale-105 flex items-center"
               >
                 <FaShoppingCart className="mr-2" />
