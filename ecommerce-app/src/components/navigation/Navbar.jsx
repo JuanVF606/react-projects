@@ -69,10 +69,15 @@ const Navbar = () => {
         {/* Ícono del carrito */}
         <div className="relative flex items-center">
           <Link to="/cart" className="relative flex items-center">
-            <AiOutlineShoppingCart className="text-2xl cursor-pointer transition-transform duration-200 hover:scale-110" />
-            {cart.length > 0 && (
+            <AiOutlineShoppingCart className="text-3xl cursor-pointer transition-transform duration-200 hover:scale-110" />
+            {cart.length === 0 ? (
               <span className="ml-2 text-sm font-semibold text-gray-800">
-                TOTAL: {formatPriceToCLP(
+                TOTAL: $0
+              </span>
+            ) : (
+              <span className="ml-3 text-sm font-semibold text-gray-800">
+                TOTAL:{" "}
+                {formatPriceToCLP(
                   cart.reduce(
                     (total, item) => total + item.price * item.quantity,
                     0

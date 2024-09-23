@@ -18,6 +18,7 @@ export const initialProducts = [
     ],
     rating: 4,
     stock: 10,
+    category: "Clothing", // Categoría añadida
   },
   {
     id: 2,
@@ -37,6 +38,7 @@ export const initialProducts = [
     ],
     rating: 5,
     stock: 10,
+    category: "Clothing", // Categoría añadida
   },
   {
     id: 3,
@@ -57,6 +59,7 @@ export const initialProducts = [
     ],
     rating: 4,
     stock: 10,
+    category: "Footwear", // Categoría añadida
   },
   {
     id: 4,
@@ -76,6 +79,7 @@ export const initialProducts = [
     ],
     rating: 4,
     stock: 10,
+    category: "Clothing", // Categoría añadida
   },
   {
     id: 5,
@@ -94,6 +98,7 @@ export const initialProducts = [
     ],
     rating: 4,
     stock: 10,
+    category: "Accessories", // Categoría añadida
   },
   {
     id: 6,
@@ -113,6 +118,7 @@ export const initialProducts = [
     ],
     rating: 4,
     stock: 10,
+    category: "Clothing", // Categoría añadida
   },
   {
     id: 7,
@@ -131,6 +137,7 @@ export const initialProducts = [
     ],
     rating: 4,
     stock: 10,
+    category: "Clothing", // Categoría añadida
   },
   {
     id: 8,
@@ -150,5 +157,47 @@ export const initialProducts = [
     ],
     rating: 4,
     stock: 10,
+    category: "Clothing", // Categoría añadida
   },
+  {
+    id: 9,
+    name: "Running Shoes",
+    price: 59990,
+    image:
+      "https://img.freepik.com/foto-gratis/primer-plano-zapatos-correr_23-2148785539.jpg?semt=ais_hybrid",
+    description:
+      "Comfortable and supportive running shoes, perfect for training.",
+    features: [
+      { name: "Material", detail: "Mesh" },
+      { name: "Sole", detail: "Rubber" },
+      { name: "Weight", detail: "250g" },
+    ],
+    reviews: [
+      { name: "Alice", feedback: "Great quality!", rating: 5 },
+      { name: "Bob", feedback: "Very comfortable.", rating: 4 },
+    ],
+    rating: 4,
+    stock: 10,
+    category: "Footwear", // Categoría añadida
+  },
+  {
+    id: 10,
+    name: "Sunglasses",
+    price: 9990,
+    image:
+      "https://img.freepik.com/foto-gratis/hombre-joven-gafas-sol_176474-38602.jpg?semt=ais_hybrid",
+    description: "Stylish sunglasses that protect your eyes from UV rays.",
+    features: [
+      { name: "Material", detail: "Plastic" },
+      { name: "Protection", detail: "UV400" },
+      { name: "Lens", detail: "Polarized" },
+    ],
+    reviews: [
+      { name: "Alice", feedback: "Great quality!", rating: 5 },
+      { name: "Bob", feedback: "Very comfortable.", rating: 4 },
+    ],
+    rating: 4,
+    stock: 10,
+    category: "Accessories", // Categoría añadida
+  }
 ];

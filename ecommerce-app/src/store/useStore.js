@@ -4,7 +4,9 @@ import { initialProducts } from '../data/products';
 import { testimonials } from '../data/testimonials';
 
 const useStore = create((set) => ({
+  newProducts: initialProducts.slice(3, 6),
   products: initialProducts,
+  discountedProducts: initialProducts.slice(6, 9),
   updateStock: (productId, quantity) => {
     set((state) => ({
       products: state.products.map((product) =>
