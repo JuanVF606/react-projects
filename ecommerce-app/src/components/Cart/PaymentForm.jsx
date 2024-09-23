@@ -1,13 +1,20 @@
+// src/components/PaymentForm.js
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import usePaymentStore from "../../store/usePaymentStore";
 import { toast } from "react-toastify";
 import useCartStore from "../../store/useCartStore";
+import useStore from "../../store/useStore";
+import useOrderStore from "../../store/useOrderStore"; // Importar el store de órdenes
+import { useNavigate } from "react-router-dom";
 
 const PaymentForm = ({ onPaymentSuccess }) => {
   const { paymentInfo, setPaymentInfo } = usePaymentStore();
-  const { clearCart } = useCartStore();
+  const { clearCart, cart } = useCartStore();
+  const { products, updateStock } = useStore();
+  const { addOrder } = useOrderStore(); // Hook del store de órdenes
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     cardNumber: Yup.string()
@@ -22,16 +29,41 @@ const PaymentForm = ({ onPaymentSuccess }) => {
   });
 
   const handleSubmit = (values, { resetForm }) => {
+    const outOfStockItems = cart.filter(cartItem => {
+      const product = products.find(prod => prod.id === cartItem.id);
+      return product && product.stock < cartItem.quantity;
+    });
+
+    if (outOfStockItems.length > 0) {
+      toast.error("Some items are out of stock. Please adjust your cart.");
+      return;
+    }
+
     toast.success("Payment information submitted successfully!");
 
     setTimeout(() => {
+      const orderDetails = cart.map(item => ({
+        id: item.id,
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+        image: item.image, // Asegúrate de que la imagen esté incluida
+      }));
+
+      // Agregar la orden al store
+      addOrder({ orderDetails, total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0) });
+
+      cart.forEach(item => {
+        updateStock(item.id, item.quantity);
+      });
+
       setPaymentInfo({ cardNumber: "", expiryDate: "", cvv: "", paymentMethod: "creditCard" });
       clearCart();
-      onPaymentSuccess();
+      onPaymentSuccess({ orderDetails }); // Puedes pasar el orderDetails si lo necesitas
+
+      navigate('/order-confirmation', { state: { orderDetails, orderId: Date.now() } }); // Navegar a la página de confirmación con el ID de la orden
     }, 1000);
   };
-
-
 
   return (
     <div className="mt-8">
@@ -45,42 +77,43 @@ const PaymentForm = ({ onPaymentSuccess }) => {
           <Form className="space-y-4">
             <div>
               <label className="block text-gray-700">Card Number</label>
-              <Field
-                name="cardNumber"
-                render={({ field }) => (
+              <Field name="cardNumber">
+                {({ field }) => (
                   <input
                     {...field}
                     className="border w-full p-2 rounded"
                     placeholder="1234 5678 9123 4567"
                   />
                 )}
-              />
+              </Field>
               <ErrorMessage name="cardNumber" component="div" className="text-red-600" />
             </div>
 
             <div>
               <label className="block text-gray-700">Expiry Date (MM/YY)</label>
-              <Field
-                name="expiryDate"
-                render={({ field }) => (
+              <Field name="expiryDate">
+                {({ field }) => (
                   <input
                     {...field}
                     className="border w-full p-2 rounded"
                     placeholder="MM/YY"
                   />
                 )}
-              />
+              </Field>
               <ErrorMessage name="expiryDate" component="div" className="text-red-600" />
             </div>
 
             <div>
               <label className="block text-gray-700">CVV</label>
-              <Field
-                type="text"
-                name="cvv"
-                className="border w-full p-2 rounded"
-                placeholder="123"
-              />
+              <Field name="cvv">
+                {({ field }) => (
+                  <input
+                    {...field}
+                    className="border w-full p-2 rounded"
+                    placeholder="123"
+                  />
+                )}
+              </Field>
               <ErrorMessage name="cvv" component="div" className="text-red-600" />
             </div>
 
@@ -93,7 +126,6 @@ const PaymentForm = ({ onPaymentSuccess }) => {
           </Form>
         )}
       </Formik>
-      
     </div>
   );
 };

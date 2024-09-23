@@ -6,6 +6,7 @@ import Home from "./pages/Home"; // Página de inicio importada
 import ProductDetails from "./pages/ProductDetails"; // Página de detalles de producto importada
 import Shop from "./pages/Shop"; // Página de tienda importada
 import Cart from "./pages/Cart"; // Página de carrito importada
+import OrderConfirmation from "./pages/OrderConfirmation";
 const App = () => {
   return (
     <Router>
@@ -20,6 +21,8 @@ const App = () => {
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/cart" element={<Cart/>} />
+            <Route path="*" element={<h1>404 Not Found</h1>} />
+            <Route path="/order-confirmation" element={<OrderConfirmation />} />
           </Routes>
         </main>
 

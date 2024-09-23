@@ -2,11 +2,11 @@ import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useCurrency } from '../../context/Currency';
 import { useShipping } from '../../context/ShippingContext';
-import useStore from '../../store/useStore';
+import useCartStore from '../../store/useCartStore';
 
 const ReviewOrder = ({ cart }) => {
   const { formatPriceToCLP } = useCurrency();
-  const { removeFromCart, updateQuantity } = useStore();
+  const { removeFromCart, updateQuantity } = useCartStore();
   const { shippingInfo } = useShipping();
 
   const subtotal = cart.reduce((acc, product) => acc + product.price * product.quantity, 0);

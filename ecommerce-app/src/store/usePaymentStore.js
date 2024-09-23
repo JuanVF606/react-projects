@@ -1,6 +1,10 @@
 // src/store/paymentStore.js
 import { create } from "zustand";
 
+const generateOrderId = () => {
+  return `ORDER-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+};
+
 const usePaymentStore = create((set, get) => ({
   paymentInfo: {
     cardNumber: '',
@@ -64,6 +68,7 @@ const usePaymentStore = create((set, get) => ({
     }
     return number;
   },
+  createOrderId: () => generateOrderId(), // Nueva función para crear un ID de orden
 }));
 
 export default usePaymentStore;

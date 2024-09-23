@@ -17,6 +17,7 @@ export const initialProducts = [
       { name: "Bob", feedback: "Very comfortable.", rating: 4 },
     ],
     rating: 4,
+    stock: 10,
   },
   {
     id: 2,
@@ -35,6 +36,7 @@ export const initialProducts = [
       { name: "Bob", feedback: "Very comfortable.", rating: 4 },
     ],
     rating: 5,
+    stock: 10,
   },
   {
     id: 3,
@@ -53,7 +55,8 @@ export const initialProducts = [
       { name: "Alice", feedback: "Great quality!", rating: 5 },
       { name: "Bob", feedback: "Very comfortable.", rating: 4 },
     ],
-    rating: 4.5,
+    rating: 4,
+    stock: 10,
   },
   {
     id: 4,
@@ -72,6 +75,7 @@ export const initialProducts = [
       { name: "Bob", feedback: "Very comfortable.", rating: 4 },
     ],
     rating: 4,
+    stock: 10,
   },
   {
     id: 5,
@@ -88,7 +92,8 @@ export const initialProducts = [
       { name: "Alice", feedback: "Great quality!", rating: 5 },
       { name: "Bob", feedback: "Very comfortable.", rating: 4 },
     ],
-    rating: 4.5,
+    rating: 4,
+    stock: 10,
   },
   {
     id: 6,
@@ -106,7 +111,8 @@ export const initialProducts = [
       { name: "Alice", feedback: "Great quality!", rating: 5 },
       { name: "Bob", feedback: "Very comfortable.", rating: 4 },
     ],
-    rating: 4.5,
+    rating: 4,
+    stock: 10,
   },
   {
     id: 7,
@@ -124,6 +130,7 @@ export const initialProducts = [
       { name: "Bob", feedback: "Very comfortable.", rating: 4 },
     ],
     rating: 4,
+    stock: 10,
   },
   {
     id: 8,
@@ -141,6 +148,7 @@ export const initialProducts = [
       { name: "Alice", feedback: "Great quality!", rating: 5 },
       { name: "Bob", feedback: "Very comfortable.", rating: 4 },
     ],
-    rating: 4.5,
+    rating: 4,
+    stock: 10,
   },
 ];

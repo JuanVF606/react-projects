@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
+import React, { useState } from "react";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import useCartStore from '../../store/useCartStore';
+import Modal from '../common/Modal';
 
 const ProductCard = ({ product }) => {
-  const { addToCart } = useCartStore();
+  const { addToCart, errorMessage, showErrorModal, closeErrorModal } = useCartStore();
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
     addToCart(product);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1000); // Oculta la notificación después de 2 segundos
+    setTimeout(() => setAdded(false), 1000); // Oculta la notificación después de 1 segundo
   };
 
   return (
@@ -24,11 +25,20 @@ const ProductCard = ({ product }) => {
       >
         <AiOutlineShoppingCart className="mr-2" /> Add to Cart
       </button>
+      <div className="absolute top-0 right-0 bg-red-500 text-white text-xs font-semibold rounded-bl-md px-2 py-1">
+        only {product.stock} units
+      </div>
+
 
       {added && (
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-2 bg-green-500 text-white text-sm rounded-md py-1 px-3 transition-all duration-300 animate-bounce">
           Added to Cart!
         </div>
+      )}
+
+      {/* Mostrar el modal si hay un mensaje de error */}
+      {showErrorModal && (
+        <Modal message={errorMessage} onClose={closeErrorModal} />
       )}
     </div>
   );

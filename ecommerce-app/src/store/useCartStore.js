@@ -3,31 +3,60 @@ import { create } from "zustand";
 
 const useCartStore = create((set) => ({
   cart: [],
-  addToCart: (product) =>
+  errorMessage: "",
+  showErrorModal: false,
+  addToCart: (product) => {
     set((state) => {
       const existingProduct = state.cart.find((item) => item.id === product.id);
+      const stockAvailable = product.stock; // Asumiendo que el producto tiene una propiedad 'stock'
+
       if (existingProduct) {
+        const newQuantity = existingProduct.quantity + 1;
+        if (newQuantity <= stockAvailable && newQuantity <= 8) {
+          return {
+            cart: state.cart.map((item) =>
+              item.id === product.id ? { ...item, quantity: newQuantity } : item
+            ),
+            errorMessage: "",
+            showErrorModal: false,
+          };
+        }
         return {
-          cart: state.cart.map((item) =>
-            item.id === product.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          ),
+          ...state,
+          errorMessage: "No puedes agregar más de 8 unidades de este producto o no hay suficiente stock.",
+          showErrorModal: true,
         };
       }
-      return { cart: [...state.cart, { ...product, quantity: 1 }] };
-    }),
-  removeFromCart: (id) =>
-    set((state) => ({
-      cart: state.cart.filter((item) => item.id !== id),
-    })),
-  updateQuantity: (id, quantity) =>
+
+      if (stockAvailable > 0) {
+        return {
+          cart: [...state.cart, { ...product, quantity: 1 }],
+          errorMessage: "",
+          showErrorModal: false,
+        };
+      }
+
+      return {
+        ...state,
+        errorMessage: "Este producto está agotado.",
+        showErrorModal: true,
+      };
+    });
+  },
+  updateQuantity: (productId, quantity) => {
     set((state) => ({
       cart: state.cart.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(quantity, 1) } : item
+        item.id === productId ? { ...item, quantity: Math.min(quantity, item.stock) } : item
       ),
-    })),
+    }));
+  },
+  removeFromCart: (productId) => {
+    set((state) => ({
+      cart: state.cart.filter((item) => item.id !== productId),
+    }));
+  },
   clearCart: () => set({ cart: [] }),
+  closeErrorModal: () => set({ showErrorModal: false, errorMessage: "" }),
 }));
 
 export default useCartStore;
