@@ -2,43 +2,37 @@ import { create } from "zustand";
 import { initialProducts } from "../data/products";
 
 const useDiscountStore = create((set, get) => ({
-  discounts: initialProducts.slice(1, 2), // Selección de productos con descuento
-  getDiscountedPrice: (productId, price) => {
-    // Lógica para obtener el precio con descuento si está disponible
-    const { discounts } = get();
-
-    // Verifica si el producto está en la lista de productos con descuentos
-    const productWithDiscount = discounts.find(
-      (discountedProduct) => discountedProduct.id === productId
-    );
-
-    if (productWithDiscount) {
-      const discountPercentage = 0.15; // Descuento del 15%
-      return price - price * discountPercentage; // Aplica el descuento
-    }
-
-    // Si no hay descuento, retorna null
-    return price;
+  discounts: initialProducts.slice(6, 24), // Productos con descuento
+  limitedProducts: initialProducts.filter(product => product.category === 'Limited'), // Filtra productos con la categoría "Limited"
+  
+  // Función general para aplicar descuentos
+  applyDiscount: (price, discountPercentage) => {
+    return price - price * discountPercentage;
   },
 
-  limitedProducts: initialProducts.slice(1, 4), // Selección de productos limitados
-  getLimitedDiscountedPrice: (productId, price) => {
-    // Lógica para obtener el precio con descuento si está disponible
-    const { limitedProducts } = get();
-
-    // Verifica si el producto está en la lista de productos limitados
-    const productWithDiscount = limitedProducts.find(
-      (discountedProduct) => discountedProduct.id === productId
-    );
+  // Obtener el precio con descuento para productos generales
+  getDiscountedPrice: (productId, price) => {
+    const { discounts } = get();
+    const productWithDiscount = discounts.find(product => product.id === productId);
 
     if (productWithDiscount) {
-      const discountPercentage = 0.30; // Descuento del 30%
-      return price - price * discountPercentage; // Aplica el descuento
+      const discountPercentage = 0.15;
+      return get().applyDiscount(price, discountPercentage);
     }
+    return price; // Precio original si no hay descuento
+  },
 
-    // Si no hay descuento, retorna el precio original
-    return price;
-  }
+  // Obtener el precio con descuento para productos limitados
+  getLimitedDiscountedPrice: (productId, price) => {
+    const { limitedProducts } = get();
+    const productWithLimitedDiscount = limitedProducts.find(product => product.id === productId);
+
+    if (productWithLimitedDiscount) {
+      const discountPercentage = 0.30; // Ajusta según lo que consideres razonable
+      return get().applyDiscount(price, discountPercentage);
+    }
+    return price; // Precio original si no hay descuento
+  },
 }));
 
 export default useDiscountStore;
