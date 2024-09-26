@@ -5,17 +5,26 @@ import NewProductCard from "../common/NewProductCard"; // Asegúrate de importar
 const NewProducts = () => {
   const { newProducts } = useStore(); // Asumiendo que tienes un hook para nuevos productos
 
-  // Muestra los nuevos productos en la página de inicio solo 3
-  const newProductsfilter = newProducts.slice(0, 3);
+  // Muestra solo 3 nuevos productos
+  const newProductsFilter = newProducts.slice(0, 3);
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-8 text-blue-600">New Arrivals</h2>
-        <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-          {newProductsfilter.map((product) => (
-            <NewProductCard key={product.id} product={product} />
-          ))}
+    <section className="py-16 bg-slate-200 rounded-xl">
+      <div className="container mx-auto flex flex-col">
+        {/* Contenedor para el título y tarjetas */}
+        <div className="flex flex-col items-center mb-10">
+          {/* Título */}
+          <h2 className="text-5xl font-bold text-blue-600 mb-6 text-center">
+            New Arrivals
+          </h2>
+          {/* Tarjetas de productos alineadas horizontalmente */}
+          <div className="flex flex-wrap justify-center gap-8">
+            {newProductsFilter.map((product) => (
+              <div className="flex-shrink-0" key={product.id}>
+                <NewProductCard product={product} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

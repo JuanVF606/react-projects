@@ -52,17 +52,25 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="relative w-64 h-80 bg-white shadow-md rounded-lg p-4 flex flex-col justify-between duration-500 hover:scale-105 hover:shadow-xl">
-      {isLimited && (
-        <div className="absolute top-2 left-2 bg-red-600 text-white rounded-full p-1">
-          <MdLocalFireDepartment className="w-5 h-5" />
-        </div>
-      )}
       <Link to={`/products/${product.id}`}>
-        <img
-          src={product.image}
-          alt={`Image-${product.name}`}
-          className="h-40 w-full object-cover rounded-lg mb-2"
-        />
+        <div className="relative">
+          <img
+            src={product.image}
+            alt={`Image-${product.name}`}
+            className="h-40 w-full object-cover rounded-lg mb-2"
+          />
+          {/* Sección de categoría sobre la imagen */}
+          <p className="absolute top-2 left-2 bg-blue-600 text-white text-sm font-semibold py-1 px-2 rounded">
+            {product.category}
+          </p>
+
+          {/* Icono de fuego a la derecha */}
+          {isLimited && (
+            <div className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1">
+              <MdLocalFireDepartment className="w-5 h-5" />
+            </div>
+          )}
+        </div>
         <p className="text-md font-bold text-black truncate">{shortName}</p>
         <p className="text-sm text-gray-600 truncate">{shortDescription}</p>
 
